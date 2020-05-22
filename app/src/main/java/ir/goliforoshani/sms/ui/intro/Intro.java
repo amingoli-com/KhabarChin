@@ -52,7 +52,7 @@ public class Intro extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         if (Keeper.getInstance().get(amount.INTRO_IS_STARTED)!=null){
-            startMainActivity();
+//            startMainActivity();
         }
     }
 
@@ -61,7 +61,6 @@ public class Intro extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         onWindowFocusChanged(true);
         setContentView(R.layout.activity_intro);
-//        AppManager.get(getApplication()).save_splash(2);
 
         bg_dots   = findViewById(R.id.bg_dots);
         indicator = findViewById(R.id.indicator);

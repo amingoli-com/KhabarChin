@@ -1,13 +1,19 @@
 package ir.goliforoshani.sms.ui.main;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -31,7 +37,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        smsPermission_isOK();
         itemStatus();
         itemList();
     }
@@ -172,40 +177,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return list;
     }
 
-    /**
-     * check Permission for SMS
-     * */
-    public Boolean smsPermission_isOK(){
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS)
-                != PackageManager.PERMISSION_GRANTED ||
-                ContextCompat.checkSelfPermission(this, Manifest.permission.READ_SMS)
-                        != PackageManager.PERMISSION_GRANTED ||
-                ContextCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_SMS)
-                        != PackageManager.PERMISSION_GRANTED ||
-                ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE)
-                        != PackageManager.PERMISSION_GRANTED )
-        {
-            ActivityCompat.requestPermissions(this,new String[]
-                    {
-                            Manifest.permission.SEND_SMS,
-                            Manifest.permission.READ_SMS,
-                            Manifest.permission.RECEIVE_SMS,
-                            Manifest.permission.READ_PHONE_STATE
-                    }, 1);
-            return false;
 
-        }
-        else if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED )
-        {
-            ActivityCompat.requestPermissions(this,new String[]
-                    {
-                            Manifest.permission.READ_PHONE_STATE
-                    }, 1);
-            return false;
-
-        }
-        else{
-            return true;
-        }
-    }
 }

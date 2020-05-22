@@ -10,8 +10,12 @@
     <string name="recived_number">دریافت کننده</string>
     <string name="_0919_519_1378">0919 519 1378</string>
     <string name="filter_number">فیلتر کردن با شماره</string>
-    <string name="descreption_filter_number">ب اضافه کردن شماره به این لیست فقط از همان شماره پیامک دریافت میشود</string>
+    <string name="descreption_filter_number">با اضافه کردن شماره به این لیست فقط از همان شماره پیامک دریافت میشود</string>
     <string name="add_new_number">اضافه کردن شماره جدید</string>
     <string name="about_app">درباره برنامه خبرچین</string>
     <string name="getStarted">بزن بریم!</string>
+    <string name="desc_need_permission">برای ورود به برنامه و ارائه خدمات به دسترسی پیامک نیاز داریم</string>
+    <string name="ok_permission">باشه</string>
+    <string name="exit_app">خروج از برنامه</string>
+    <string name="go_to_app">ورود به برنامه</string>
 </resources>
