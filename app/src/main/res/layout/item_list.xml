@@ -26,7 +26,8 @@
                 android:layout_height="wrap_content"/>
 
             <TextView
-                android:padding="@dimen/_3sdp"
+                android:paddingStart="@dimen/_5sdp"
+                android:paddingEnd="@dimen/_5sdp"
                 android:textSize="@dimen/_10ssp"
                 android:textAlignment="center"
                 android:textColor="#5A5959"
