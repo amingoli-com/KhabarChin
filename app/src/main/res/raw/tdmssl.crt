@@ -1,0 +1,21 @@
+[ req ]
+default_bits        = 2048
+distinguished_name  = req_distinguished_name
+attributes          = req_attributes
+prompt              = no
+
+[ req_distinguished_name ]
+C            = MX
+ST           = VE
+L            = XL
+O            = HighSchool
+OU           = ITDepartment
+CN           = example.com
+emailAddress = itadmin@example.com
+
+[ req_attributes ]
+challengePassword = jumpsoverthelazydog
+
+
+# See the link for more information about [ req_distinguished_name ] section
+# https://www.phildev.net/ssl/opensslconf.html

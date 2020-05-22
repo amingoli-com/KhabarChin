@@ -1,0 +1,71 @@
+<androidx.cardview.widget.CardView
+    android:layoutDirection="rtl"
+    app:cardCornerRadius="@dimen/_10sdp"
+    android:layout_centerHorizontal="true"
+    android:layout_marginBottom="@dimen/_30sdp"
+    android:layout_marginStart="@dimen/_10sdp"
+    android:layout_marginEnd="@dimen/_10sdp"
+    android:layout_marginTop="@dimen/_10sdp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:textSize="@dimen/_12ssp"
+                android:textColor="#333"
+                android:textAlignment="center"
+                android:text="@string/filter_number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:padding="@dimen/_3sdp"
+                android:textSize="@dimen/_10ssp"
+                android:textAlignment="center"
+                android:textColor="#5A5959"
+                android:text="@string/descreption_filter_number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:textSize="@dimen/_14ssp"
+                android:textAlignment="center"
+                android:textColor="#001F7C"
+                android:text="@string/add_new_number"
+                android:onClick="onClick"
+                android:tag="add_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view"
+                android:layoutDirection="ltr"
+                android:layout_margin="@dimen/_15ssp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+
+
+        </LinearLayout>
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:visibility="gone"
+            android:id="@+id/animation_view"
+            android:layout_centerInParent="true"
+            android:layout_width="@dimen/_200sdp"
+            android:layout_height="@dimen/_200sdp"
+            app:lottie_rawRes="@raw/empty"
+            app:lottie_loop="false"
+            app:lottie_autoPlay="false" />
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>
