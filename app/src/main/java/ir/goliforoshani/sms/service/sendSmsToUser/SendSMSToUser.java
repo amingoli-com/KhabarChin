@@ -47,11 +47,14 @@ public class SendSMSToUser extends AsyncTask<itemSendSms, Void , Void> {
                         List<String> arrPackageData = gson.fromJson(json, type);
                         for(String data:arrPackageData) {
                             String[] multi_number = {data,"+98"+data,"+980"+data,"+"+data};
+                            if (data.startsWith("0")){
+                                String data2 = data.substring(1);
+                                multi_number = new String[]{data, "+98" + data, "+980" + data, "+" + data, data2, "+98" + data2, "+980" + data2, "+" + data2};
+                            }
                             for (String number:multi_number){
                                 if (p.number.equals(number)){
                                     smsManager.sendTextMessage(Keeper.getInstance().get(amount.NUMBER_PHONE), null,
                                             p.number+"\n"+p.massage, null, null);
-                                }else {
                                 }
                             }
                         }
