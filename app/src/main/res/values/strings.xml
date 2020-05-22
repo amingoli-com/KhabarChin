@@ -7,7 +7,7 @@
     <string name="on">فعال</string>
     <string name="off">غیرفعال</string>
     <string name="status">وضعیت سرویس</string>
-    <string name="recived_number">شماره تلفن دریافت کننده</string>
+    <string name="recived_number">دریافت کننده</string>
     <string name="_0919_519_1378">0919 519 1378</string>
     <string name="filter_number">فیلتر کردن شماره</string>
     <string name="descreption_filter_number">با اضافه کردن شماره به این لیست فقط پیامک هایی که سر شماره آن با این لیست مطابقت داشته باشد برای شما ارسال میشه</string>
