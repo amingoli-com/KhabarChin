@@ -1,6 +1,7 @@
-package ir.goliforoshani.sms.ui;
+package ir.goliforoshani.sms.ui.main;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
@@ -19,6 +20,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 import ir.goliforoshani.sms.R;
+import ir.goliforoshani.sms.ui.intro.Intro;
 import ir.goliforoshani.sms.utils.Keeper;
 import ir.goliforoshani.sms.utils.amount;
 
@@ -74,6 +76,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 itemStatus();
                 break;
             default:
+                startActivity(new Intent(this, Intro.class));
                 break;
         }
     }

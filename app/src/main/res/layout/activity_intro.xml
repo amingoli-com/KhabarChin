@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layoutDirection="ltr"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    tools:context=".ui.intro.Intro"
+    tools:ignore="UnusedAttribute">
+
+    <com.lsjwzh.widget.recyclerviewpager.RecyclerViewPager
+        android:id="@+id/recyclerViewPager_intro"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:rvp_triggerOffset="0.1"
+        app:rvp_singlePageFling="true"
+        android:clipToPadding="false"/>
+
+    <View
+        android:id="@+id/bg_dots"
+        android:background="#000000"
+        android:alpha="0.1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/box"
+        android:layout_alignParentBottom="true" />
+
+    <RelativeLayout
+        android:id="@+id/box"
+        android:layout_alignParentBottom="true"
+        android:paddingBottom="@dimen/_5sdp"
+        android:paddingStart="@dimen/_5sdp"
+        android:paddingEnd="@dimen/_5sdp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:visibility="invisible"
+            android:enabled="false"
+            android:id="@+id/next"
+            android:tag="next"
+            android:onClick="btn_intro"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:padding="@dimen/_10sdp"
+            android:textColor="@android:color/holo_blue_dark"
+            android:textSize="@dimen/_12ssp"
+            android:text="Next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:ignore="HardcodedText,OnClick" />
+
+        <me.relex.circleindicator.CircleIndicator2
+            android:id="@+id/indicator"
+            app:ci_width ="@dimen/_5sdp"
+            app:ci_height ="@dimen/_5sdp"
+            app:ci_margin ="@dimen/_5sdp"
+
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:id="@+id/start"
+            android:textAlignment="center"
+            android:enabled="false"
+            android:alpha="0"
+            android:tag="skip"
+            android:onClick="btn_intro"
+            android:padding="@dimen/_10sdp"
+            android:textColor="@android:color/holo_blue_dark"
+            android:textSize="@dimen/_12ssp"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:ignore="OnClick" />
+
+        <ImageView
+            android:id="@+id/image_next"
+            android:tag="next"
+            android:src="@drawable/icon_felesh"
+            android:onClick="btn_intro"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:tint="#fff"
+            android:padding="@dimen/_5sdp"
+            android:layout_width="@dimen/_35sdp"
+            android:layout_height="@dimen/_35sdp"
+            tools:ignore="OnClick" />
+
+        <TextView
+            android:visibility="invisible"
+            android:enabled="false"
+            android:id="@+id/skip"
+            android:tag="skip"
+            android:onClick="btn_intro"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:padding="@dimen/_10sdp"
+            android:textColor="@android:color/holo_blue_dark"
+            android:textSize="@dimen/_12ssp"
+            android:text="Skip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:ignore="HardcodedText,OnClick" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

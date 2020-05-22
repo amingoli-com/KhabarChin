@@ -12,4 +12,6 @@
     <string name="filter_number">فیلتر کردن شماره</string>
     <string name="descreption_filter_number">با اضافه کردن شماره به این لیست فقط پیامک هایی که سر شماره آن با این لیست مطابقت داشته باشد برای شما ارسال میشه</string>
     <string name="add_new_number">اضافه کردن شماره جدید</string>
+    <string name="about_app">درباره برنامه خبرچین</string>
+    <string name="getStarted">بزن بریم!</string>
 </resources>

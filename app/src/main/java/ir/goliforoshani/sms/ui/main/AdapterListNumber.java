@@ -1,4 +1,4 @@
-package ir.goliforoshani.sms.ui;
+package ir.goliforoshani.sms.ui.main;
 
 import android.content.Context;
 import android.view.LayoutInflater;

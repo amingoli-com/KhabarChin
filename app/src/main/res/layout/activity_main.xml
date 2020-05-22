@@ -1,19 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layoutDirection="ltr"
-    android:orientation="vertical"
-    tools:context=".ui.MainActivity">
+    tools:context=".ui.main.MainActivity">
 
     <include
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
         android:id="@+id/view_item_status"
-        layout="@layout/item_status"/>
+        android:layout_margin="@dimen/_10sdp"
+        layout="@layout/item_status"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent" />
 
     <include
         android:id="@+id/view_item_list"
+        android:layout_below="@+id/view_item_status"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:layout_margin="@dimen/_10sdp"
         layout="@layout/item_list"/>
 
-</LinearLayout>
+</RelativeLayout>
