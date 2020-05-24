@@ -34,7 +34,7 @@
             <TextView
                 android:id="@+id/status"
                 android:onClick="onClick"
-                android:tag="off"
+                android:tag="status"
                 android:text="@string/off"
                 style="@style/item_number"
                 android:textColor="@color/red"/>

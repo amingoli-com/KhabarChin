@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onStart() {
         super.onStart();
-        checkStatus();
+        itemStatus();
     }
 
     @Override
@@ -47,7 +47,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (Keeper.getInstance().get(amount.NUMBER_PHONE) == null){
             saveNumber(this);
         }
-        itemStatus();
         itemList();
     }
 
@@ -69,9 +68,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case "number_phone":
                 saveNumber(this);
                 break;
-            case "on":
-            case "off":
-                itemStatus();
+            case "status":
+                if (keeperStatusIsOn()){
+                    changeStatus(false);
+                }else {
+                    changeStatus(true);
+                }
                 break;
             default:
                 startActivity(new Intent(this, Intro.class));
@@ -93,6 +95,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Keeper.getInstance().save(amount.NUMBER_PHONE,number);
                 if (Keeper.getInstance().get(amount.STATUS_SERVICE) == null)
                     Keeper.getInstance().save(amount.STATUS_SERVICE,"on");
+                itemStatus();
             }
         };
         AddNumberDialog add_number = new AddNumberDialog(activity,listener,cancelable);
@@ -109,28 +112,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         status = item_status.findViewById(R.id.status);
         TextView number = item_status.findViewById(R.id.number_phone);
         number.setText(Keeper.getInstance().get(amount.NUMBER_PHONE));
-        String stau = status.getTag().toString();
-
-        if (stau.equals("off")){
+        if (keeperStatusIsOn()){
+            changeStatus(true);
+        }else {
+            changeStatus(false);
+        }
+    }
+    private boolean keeperStatusIsOn(){
+        String ke = Keeper.getInstance().get(amount.STATUS_SERVICE);
+        return ke != null && ke.equals("on");
+    }
+    void changeStatus(boolean on){
+        if (on){
             status.setText(getString(R.string.on));
             status.setTextColor(getResources().getColor(R.color.green));
-            status.setTag("on");
             Keeper.getInstance().save(amount.STATUS_SERVICE,"on");
         }else {
             status.setText(getString(R.string.off));
             status.setTextColor(getResources().getColor(R.color.red));
-            status.setTag("off");
             Keeper.getInstance().save(amount.STATUS_SERVICE,"off");
-        }
-
-        Log.d(TAG, "itemStatus: "+Keeper.getInstance().get(amount.STATUS_SERVICE));
-    }
-    private void checkStatus(){
-        String ke = Keeper.getInstance().get(amount.STATUS_SERVICE);
-        if (ke!=null && ke.equals("on")){
-            status.setTag("off");
-        }else {
-            status.setTag("on");
         }
     }
 
