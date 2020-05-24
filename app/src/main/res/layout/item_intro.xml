@@ -13,7 +13,7 @@
         android:id="@+id/title_intro1"
         android:textAlignment="center"
         android:textColor="@color/title"
-        android:textSize="@dimen/_50ssp"
+        android:textSize="@dimen/_20ssp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
     <TextView
@@ -23,7 +23,7 @@
         android:textStyle="bold"
         android:textAlignment="center"
         android:textColor="@color/title"
-        android:textSize="@dimen/_30ssp"
+        android:textSize="@dimen/_14ssp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
     <TextView
@@ -33,7 +33,7 @@
         android:paddingEnd="@dimen/_7sdp"
         android:textAlignment="center"
         android:textColor="@color/desc"
-        android:textSize="@dimen/_14ssp"
+        android:textSize="@dimen/_10ssp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 </LinearLayout>
