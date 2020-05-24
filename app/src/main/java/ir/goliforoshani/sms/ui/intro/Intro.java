@@ -1,25 +1,27 @@
 package ir.goliforoshani.sms.ui.intro;
 
+import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
+import android.provider.Settings;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.PagerSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.lsjwzh.widget.recyclerviewpager.RecyclerViewPager;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -100,6 +102,8 @@ public class Intro extends AppCompatActivity {
                     start.animate().alpha(1).setDuration(100);
                     start.setEnabled(true);
                 }else {
+//                    if (Keeper.getInstance().get(amount.STATUS_SERVICE) == null)
+//                        Keeper.getInstance().save(amount.STATUS_SERVICE,"on");
                     img_next.setTag("next");
                     img_next.animate().alpha(1).setDuration(150);
                     indicator.animate().alpha(1).setDuration(150);
@@ -138,20 +142,22 @@ public class Intro extends AppCompatActivity {
     }
 
     private void startMainActivity(){
-        Keeper.getInstance().save(amount.INTRO_IS_STARTED,"started");
-        finish();
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
+        if (permission()){
+            Keeper.getInstance().save(amount.INTRO_IS_STARTED,"started");
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        }
     }
 
 
     private void getJson(){
+        itemIntroList.add(new IntroModel("برای غ","subtitle", "desc",bg_from,bg_to,color_primary,color_secondary));
         itemIntroList.add(new IntroModel("title","subtitle", "desc",bg_from,bg_to,color_primary,color_secondary));
         itemIntroList.add(new IntroModel("title","subtitle", "desc",bg_from,bg_to,color_primary,color_secondary));
         itemIntroList.add(new IntroModel("title","subtitle", "desc",bg_from,bg_to,color_primary,color_secondary));
-        itemIntroList.add(new IntroModel("title","subtitle", "desc",bg_from,bg_to,color_primary,color_secondary));
-        adaptorIntro.notifyDataSetChanged();
         recyclerView.getAdapter();
+        adaptorIntro.notifyDataSetChanged();
     }
 
     @Override
@@ -161,6 +167,114 @@ public class Intro extends AppCompatActivity {
             View decorView = getWindow().getDecorView();
             decorView.setSystemUiVisibility(
                     View.SYSTEM_UI_FLAG_IMMERSIVE | View.SYSTEM_UI_FLAG_FULLSCREEN);
+        }
+    }
+
+    /**
+     * check Permission for SMS
+     * */
+    private boolean dialogIsRun = false;
+    private static final int EXTERNAL_STORAGE_PERMISSION_CONSTANT = 100;
+    private static final int REQUEST_PERMISSION_SETTING = 101;
+    private boolean sentToSettings = false;
+    private boolean permission(){
+        final String[] a = {Manifest.permission.SEND_SMS, Manifest.permission.READ_SMS, Manifest.permission.RECEIVE_SMS};
+
+        SharedPreferences permissionStatus = getSharedPreferences("permissionStatus", MODE_PRIVATE);
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED ||
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_SMS) != PackageManager.PERMISSION_GRANTED ||
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.RECEIVE_SMS) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.SEND_SMS) ||
+                    ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_SMS) ||
+                    ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.RECEIVE_SMS)) {
+                //Show Information about why you need the permission
+                dialogIsRun = true;
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setMessage(R.string.desc_need_permission);
+                builder.setPositiveButton(R.string.ok_permission, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialogIsRun = false;
+                        dialog.cancel();
+                        ActivityCompat.requestPermissions(Intro.this, a, EXTERNAL_STORAGE_PERMISSION_CONSTANT);
+                    }
+                });
+                builder.setNegativeButton(R.string.exit_app, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialogIsRun = false;
+                        finish();
+                        dialog.cancel();
+                    }
+                });
+                builder.show();
+            } else if (permissionStatus.getBoolean(Manifest.permission.SEND_SMS,false) ||
+                    permissionStatus.getBoolean(Manifest.permission.READ_SMS,false) ||
+                    permissionStatus.getBoolean(Manifest.permission.RECEIVE_SMS,false)) {
+                //Previously Permission Request was cancelled with 'Dont Ask Again',
+                // Redirect to Settings after showing Information about why you need the permission
+                dialogIsRun = true;
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setMessage(R.string.desc_need_permission);
+                builder.setPositiveButton(R.string.ok_permission, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialogIsRun = false;
+                        dialog.cancel();
+                        sentToSettings = true;
+                        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                        Uri uri = Uri.fromParts("package", getPackageName(), null);
+                        intent.setData(uri);
+                        startActivityForResult(intent, REQUEST_PERMISSION_SETTING);
+                    }
+                });
+                builder.setNegativeButton(R.string.exit_app, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialogIsRun = false;
+                        finish();
+                        dialog.cancel();
+                    }
+                });
+                builder.show();
+            } else {
+                //just request the permission
+                ActivityCompat.requestPermissions(this, a, EXTERNAL_STORAGE_PERMISSION_CONSTANT);
+            }
+
+            SharedPreferences.Editor editor = permissionStatus.edit();
+            editor.putBoolean(Manifest.permission.SEND_SMS,true);
+            editor.putBoolean(Manifest.permission.READ_SMS,true);
+            editor.putBoolean(Manifest.permission.RECEIVE_SMS,true);
+            editor.apply();
+            return false;
+
+        } else {
+            startActivity(new Intent(this, MainActivity.class));
+            finish();
+            return true;
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case EXTERNAL_STORAGE_PERMISSION_CONSTANT: {
+
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    startMainActivity();
+                    // call your method
+                } else {
+                    permission();
+                }
+                return;
+            }
+
+            // other 'case' lines to check for other
+            // permissions this app might request
         }
     }
 }

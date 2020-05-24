@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name">SMS</string>
-    <string name="add_number">شماره مورد نظر خود را وارد کنید</string>
+    <string name="app_name">خبرچین (انتقال پیامک)</string>
+    <string name="add_number">شماره تلفن را وارد کنید</string>
     <string name="submit">تایید</string>
     <string name="warm_number_length_less_then_two_digits">شماره باید حداقل %1$s رقم داشته باشد</string>
     <string name="btn_add_number">اضافه کردن شماره</string>

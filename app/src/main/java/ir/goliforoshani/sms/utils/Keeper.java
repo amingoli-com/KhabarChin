@@ -12,13 +12,13 @@ import ir.goliforoshani.sms.AppController;
 
 public class Keeper {
 
-    public static final Keeper instance = new Keeper();
+    private static final Keeper instance = new Keeper();
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
 
-    public static final String PREF_KEEPER = "pref_keeper";
+    private static final String PREF_KEEPER = "pref_keeper";
 
-    public Keeper() {
+    private Keeper() {
         sharedPreferences = AppController.getInstance().getSharedPreferences(PREF_KEEPER, Context.MODE_PRIVATE);
     }
 

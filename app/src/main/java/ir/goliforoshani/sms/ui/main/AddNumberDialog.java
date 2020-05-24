@@ -20,12 +20,21 @@ public class AddNumberDialog extends AlertDialog implements
     private listener listener;
     private EditText editText;
     private Button submit;
+    private boolean auto_cancelable = true;
 
     public AddNumberDialog(Activity a, listener listeners) {
         super(a);
         // TODO Auto-generated constructor stub
         this.c = a;
         this.listener = listeners;
+    }
+
+    public AddNumberDialog(Activity a, listener listeners , boolean autoCancelable) {
+        super(a);
+        // TODO Auto-generated constructor stub
+        this.c = a;
+        this.listener = listeners;
+        this.auto_cancelable = autoCancelable;
     }
 
     @Override
@@ -40,6 +49,7 @@ public class AddNumberDialog extends AlertDialog implements
         }
         submit = findViewById(R.id.submit);
         submit.setOnClickListener(this);
+        setCancelable(auto_cancelable);
     }
 
     @Override

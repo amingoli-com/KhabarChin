@@ -1,6 +1,7 @@
 package ir.goliforoshani.sms.ui.main;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -34,9 +35,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private String TAG = "amingoli-main";
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        checkStatus();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        if (Keeper.getInstance().get(amount.NUMBER_PHONE) == null){
+            saveNumber(this);
+        }
         itemStatus();
         itemList();
     }
@@ -57,33 +67,36 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 add_item.show();
                 break;
             case "number_phone":
-                final AddNumberDialog number_phone = new AddNumberDialog(this, new AddNumberDialog.listener() {
-                    @Override
-                    public void result(String number) {
-                        if (number.length() >= 7){
-                            Keeper.getInstance().save(amount.NUMBER_PHONE,number);
-                        }else {
-                            Toast.makeText(MainActivity.this, getResources()
-                                                    .getString(R.string.warm_number_length_less_then_two_digits,"هفت"),
-                                            Toast.LENGTH_SHORT).show();
-                        }
-                        itemStatus();
-                    }
-                });
-                number_phone.show();
+                saveNumber(this);
                 break;
             case "on":
-                Keeper.getInstance().save(amount.STATUS_SERVICE,"off");
-                itemStatus();
-                break;
             case "off":
-                Keeper.getInstance().save(amount.STATUS_SERVICE,"on");
                 itemStatus();
                 break;
             default:
                 startActivity(new Intent(this, Intro.class));
                 break;
         }
+    }
+
+    /**
+     * Save Number
+     * */
+    private void saveNumber(Activity activity){
+        boolean cancelable = true;
+        if (Keeper.getInstance().get(amount.NUMBER_PHONE) == null){
+            cancelable = false;
+        }
+        AddNumberDialog.listener listener = new AddNumberDialog.listener() {
+            @Override
+            public void result(String number) {
+                Keeper.getInstance().save(amount.NUMBER_PHONE,number);
+                if (Keeper.getInstance().get(amount.STATUS_SERVICE) == null)
+                    Keeper.getInstance().save(amount.STATUS_SERVICE,"on");
+            }
+        };
+        AddNumberDialog add_number = new AddNumberDialog(activity,listener,cancelable);
+        add_number.show();
     }
 
     /**
@@ -96,25 +109,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         status = item_status.findViewById(R.id.status);
         TextView number = item_status.findViewById(R.id.number_phone);
         number.setText(Keeper.getInstance().get(amount.NUMBER_PHONE));
+        String stau = status.getTag().toString();
 
-        if (status_service()){
+        if (stau.equals("off")){
             status.setText(getString(R.string.on));
             status.setTextColor(getResources().getColor(R.color.green));
             status.setTag("on");
+            Keeper.getInstance().save(amount.STATUS_SERVICE,"on");
         }else {
             status.setText(getString(R.string.off));
             status.setTextColor(getResources().getColor(R.color.red));
             status.setTag("off");
+            Keeper.getInstance().save(amount.STATUS_SERVICE,"off");
         }
-        Keeper.getInstance().save(amount.STATUS_SERVICE,status.getTag().toString());
-    }
 
-    private boolean status_service(){
-        String tag = Keeper.getInstance().get(amount.STATUS_SERVICE);
-        if (tag!=null && tag.equals("on") ){
-            return true;
+        Log.d(TAG, "itemStatus: "+Keeper.getInstance().get(amount.STATUS_SERVICE));
+    }
+    private void checkStatus(){
+        String ke = Keeper.getInstance().get(amount.STATUS_SERVICE);
+        if (ke!=null && ke.equals("on")){
+            status.setTag("off");
+        }else {
+            status.setTag("on");
         }
-        return false;
     }
 
     /**
