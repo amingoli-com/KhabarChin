@@ -54,7 +54,7 @@ public class Intro extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         if (Keeper.getInstance().get(amount.INTRO_IS_STARTED)!=null){
-//            startMainActivity();
+            startMainActivity();
         }
     }
 
@@ -102,8 +102,8 @@ public class Intro extends AppCompatActivity {
                     start.animate().alpha(1).setDuration(100);
                     start.setEnabled(true);
                 }else {
-//                    if (Keeper.getInstance().get(amount.STATUS_SERVICE) == null)
-//                        Keeper.getInstance().save(amount.STATUS_SERVICE,"on");
+                    if (Keeper.getInstance().get(amount.STATUS_SERVICE) == null)
+                        Keeper.getInstance().save(amount.STATUS_SERVICE,"on");
                     img_next.setTag("next");
                     img_next.animate().alpha(1).setDuration(150);
                     indicator.animate().alpha(1).setDuration(150);
@@ -152,10 +152,10 @@ public class Intro extends AppCompatActivity {
 
 
     private void getJson(){
-        itemIntroList.add(new IntroModel("برای غ","subtitle", "desc",bg_from,bg_to,color_primary,color_secondary));
-        itemIntroList.add(new IntroModel("title","subtitle", "desc",bg_from,bg_to,color_primary,color_secondary));
-        itemIntroList.add(new IntroModel("title","subtitle", "desc",bg_from,bg_to,color_primary,color_secondary));
-        itemIntroList.add(new IntroModel("title","subtitle", "desc",bg_from,bg_to,color_primary,color_secondary));
+        itemIntroList.add(new IntroModel("سلام عزیزم",null, "من خبرچین هستم! دستیار پیامکی شما",bg_from,bg_to,color_primary,color_secondary));
+        itemIntroList.add(new IntroModel("قراره چیکار کنم؟",null, "معلومه پیامک ها رو برای یه نفر دیگه هم بفرستم",bg_from,bg_to,color_primary,color_secondary));
+        itemIntroList.add(new IntroModel("راستی!",null, "کلا دسترسی من به اینترنت قطعه، پس نگران چیزی نباش!",bg_from,bg_to,color_primary,color_secondary));
+        itemIntroList.add(new IntroModel("و صد البته!",null, "با اجازه شما شروع میکنم",bg_from,bg_to,color_primary,color_secondary));
         recyclerView.getAdapter();
         adaptorIntro.notifyDataSetChanged();
     }
@@ -251,8 +251,6 @@ public class Intro extends AppCompatActivity {
             return false;
 
         } else {
-            startActivity(new Intent(this, MainActivity.class));
-            finish();
             return true;
         }
     }

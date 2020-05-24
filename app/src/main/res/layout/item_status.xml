@@ -12,6 +12,7 @@
         android:layout_height="match_parent">
 
         <TextView
+            android:visibility="gone"
             android:id="@+id/about"
             android:onClick="onClick"
             android:tag="about"
